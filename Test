@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kwestionariusz Stylu Interpersonalnego</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .question {
+            margin-top: 20px;
+        }
+        .result {
+            margin-top: 30px;
+            font-weight: bold;
+            color: #333;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Kwestionariusz Stylu Interpersonalnego</h1>
+
+    <form id="testForm">
+        <div class="question">
+            <label>1. Jak reagujesz na konflikt?</label><br>
+            <input type="radio" name="q1" value="red"> Zdecydowanie i bezpośrednio<br>
+            <input type="radio" name="q1" value="yellow"> Z humorem, by rozładować atmosferę<br>
+            <input type="radio" name="q1" value="green"> Staram się unikać konfliktów<br>
+            <input type="radio" name="q1" value="blue"> Analizuję sytuację, aby znaleźć rozwiązanie<br>
+        </div>
+        
+        <div class="question">
+            <label>2. Jak podejmujesz decyzje?</label><br>
+            <input type="radio" name="q2" value="red"> Szybko i zdecydowanie<br>
+            <input type="radio" name="q2" value="yellow"> Intuicyjnie i optymistycznie<br>
+            <input type="radio" name="q2" value="green"> Po zastanowieniu i rozważeniu opinii innych<br>
+            <input type="radio" name="q2" value="blue"> Na podstawie analizy faktów<br>
+        </div>
+        
+        <div class="question">
+            <label>3. Jak radzisz sobie z krytyką?</label><br>
+            <input type="radio" name="q3" value="red"> Odpowiadam i bronię swojego stanowiska<br>
+            <input type="radio" name="q3" value="yellow"> Żartuję, by odwrócić uwagę<br>
+            <input type="radio" name="q3" value="green"> Staram się zrozumieć i przyjąć ją na spokojnie<br>
+            <input type="radio" name="q3" value="blue"> Analizuję, aby wyciągnąć z niej naukę<br>
+        </div>
+
+        <button type="button" onclick="calculateResult()">Zobacz wynik</button>
+    </form>
+
+    <div class="result" id="result"></div>
+
+    <script>
+        function calculateResult() {
+            const form = document.getElementById('testForm');
+            const answers = new FormData(form);
+            const colorCount = { red: 0, yellow: 0, green: 0, blue: 0 };
+
+            // Count answers for each color
+            for (const value of answers.values()) {
+                colorCount[value]++;
+            }
+
+            // Determine result based on highest count
+            let resultText = "";
+            const maxColor = Object.keys(colorCount).reduce((a, b) => colorCount[a] > colorCount[b] ? a : b);
+
+            if (colorCount[maxColor] === 2) {
+                resultText = `Wygląda na to, że jesteś typem mieszanym: ${maxColor} z domieszką innych cech.`;
+            } else {
+                resultText = `Dominującym kolorem Twojego stylu interpersonalnego jest: ${maxColor}.`;
+            }
+
+            document.getElementById('result').textContent = resultText;
+        }
+    </script>
+</body>
+</html>
